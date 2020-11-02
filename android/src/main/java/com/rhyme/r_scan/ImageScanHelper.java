@@ -211,12 +211,7 @@ public class ImageScanHelper extends ContextWrapper {
                         HttpsURLConnection connection = (HttpsURLConnection) myUrl.openConnection();
                         connection.setReadTimeout(6 * 60 * 1000);
                         connection.setConnectTimeout(6 * 60 * 1000);
-                        TrustManager[] tm = {new MyX509TrustManager()};
-                        SSLContext sslContext = SSLContext.getInstance("TLS");
-                        sslContext.init(null, tm, new java.security.SecureRandom());
-                        // 从上述SSLContext对象中得到SSLSocketFactory对象
-                        SSLSocketFactory ssf = sslContext.getSocketFactory();
-                        connection.setSSLSocketFactory(ssf);
+                      connection.setSSLSocketFactory((SSLSocketFactory) SSLSocketFactory.getDefault());
                         connection.connect();
                         bitmap = BitmapFactory.decodeStream(connection.getInputStream());
                     } else {
